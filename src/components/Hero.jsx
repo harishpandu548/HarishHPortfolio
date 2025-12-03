@@ -7,7 +7,7 @@ import AdvancedHeroBG from "./AdvancedHeroBG";
 
 export default function Hero() {
   async function downloadResume() {
-    const url = "/Harishh_CV.pdf";
+    const url = "/Harish_CV.pdf";
     try {
       const res = await fetch(url);
       if (!res.ok) throw new Error("Network response was not ok");
@@ -15,7 +15,7 @@ export default function Hero() {
       const blobUrl = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = blobUrl;
-      a.download = "Harishh_CV.pdf";
+      a.download = "Harish_CV.pdf";
       document.body.appendChild(a);
       a.click();
       a.remove();
