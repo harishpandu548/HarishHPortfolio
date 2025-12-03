@@ -1,0 +1,99 @@
+.wrapper {
+  width: 100%;
+  height: 390px; /* tweak if you want taller/shorter */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  /* IMPORTANT: let section background show through */
+  background: transparent;   /* <- transparent so section gradient shows */
+  border-radius: 0;          /* remove rounded page corners */
+  overflow: visible;         /* ensure cubes are not clipped */
+}
+
+/* playground is the relative coordinates box */
+.playground {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  touch-action: none;
+  user-select: none;
+}
+
+/* individual block (the cube) */
+.block {
+  --size: 120px; /* match blockSize in JS */
+  width: var(--size);
+  height: var(--size);
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: center center;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6), inset 0 -6px 18px rgba(0,0,0,0.25);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  transition: transform 120ms linear, opacity 260ms ease;
+  cursor: grab;
+}
+
+/* while active dragging */
+.block:active {
+  cursor: grabbing;
+}
+
+/* inner content */
+.blockInner {
+  width: 92%;
+  height: 92%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #07101a;
+  text-align: center;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* icon + label */
+.icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.85);
+}
+.label {
+  font-size: 15px;
+  color: #07101a;
+  letter-spacing: -0.2px;
+}
+
+/* keep hidden until engine starts (prevent initial pop) */
+.hidden {
+  opacity: 0;
+  transform: translate3d(0,-16px,0) scale(0.98);
+  pointer-events: none;
+}
+.visible {
+  opacity: 1;
+  transform: translate3d(0,0,0) scale(1);
+  transition: transform 520ms cubic-bezier(.16,.82,.24,1), opacity 420ms ease;
+  pointer-events: auto;
+}
+
+/* smaller screens tweak */
+@media (max-width: 768px) {
+  .wrapper { height: 520px; }
+  .block { --size: 100px; border-radius: 12px; }
+  .icon { width: 36px; height: 36px; }
+  .label { font-size: 12px; }
+}

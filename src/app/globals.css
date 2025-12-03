@@ -1,9 +1,71 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@import "tailwindcss";
+
+@import "tailwindcss";
+
+/* 🔒 While intro is running: lock scroll, hide cursor bits, hide scroll indicator.
+   Using scrollbar-gutter: stable to avoid layout shift when scrollbar hides/shows. */
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable both-edges; /* reserve scrollbar space always */
 }
+
+html.intro-running,
+body.intro-running {
+  overflow: hidden !important; /* hide scroll, no layout shift because gutter is stable */
+}
+
+/* hide custom cursors while intro runs */
+.intro-running .cursor,
+.intro-running .cursor-ball,
+.intro-running .cursor-trail,
+.intro-running [data-cursor],
+.intro-running .ct-cursor,
+.intro-running .cursor-layer {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* hide hero scroll indicator while intro runs */
+.intro-running .animate-hero-scroll,
+.intro-running .scroll-indicator {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* anchor offset for fixed header */
+:root {
+  --background: #000000;
+  --foreground: #ededed;
+  --site-header-height: 88px;
+}
+
+[id] {
+  scroll-margin-top: calc(var(--site-header-height) + 20px);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+html,
+body,
+#__next,
+main {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  min-height: 100%;
+}
+
+/* ---- BELOW THIS LINE, keep your existing rich-footer and other styles ---- */
+
 
 @theme inline {
   --color-background: var(--background);
@@ -19,8 +81,328 @@
   }
 }
 
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+} 
+
+
+/* ---------------------------
+   Rich Footer styles (paste)
+   --------------------------- */
+
+.rich-footer {
+  position: relative;
+  overflow: hidden; /* keep canvas inside */
+  background: transparent; /* let canvas show through */
 }
+
+
+/* canvas on left */
+.rich-footer__canvas {
+  position: absolute;
+  inset: 0;              /* top:0; right:0; bottom:0; left:0 */
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;  /* so form/buttons remain usable */
+  z-index: 0;            /* behind content (content should be z-index:1 or default) */
+}
+/* inner content sits above canvas */
+.rich-footer__inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* title */
+.rich-footer__title {
+  font-size: 2.6rem;
+  line-height: 1.02;
+  text-align: center;
+  font-weight: 900;
+  margin: 4px 0 8px;
+  color: #f6fbff;
+  letter-spacing: -0.01em;
+  text-shadow: 0 18px 48px rgba(0,0,0,0.6);
+}
+
+/* gradient inline text */
+.gradient-text {
+  background: linear-gradient(90deg, #2fe1c2, #60a5fa 40%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* subtitle & email */
+.rich-footer__sub {
+  text-align: center;
+  color: #9fb0c6;
+  margin-top: 6px;
+  font-size: 15px;
+}
+.rich-footer__email {
+  text-align: center;
+  margin-top: 8px;
+}
+.rich-footer__email-link {
+  color: #79d1ff;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(121,209,255,0.06);
+  padding-bottom: 2px;
+}
+
+/* socials row */
+.rich-footer__socials {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+/* social button */
+.social-btn {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.03);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.04);
+  color: #e6f6ff;
+  transition: transform .22s ease, box-shadow .22s ease, background .22s ease;
+  box-shadow: 0 6px 18px rgba(4,8,12,0.6), inset 0 1px rgba(255,255,255,0.02);
+}
+.social-btn:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(40,140,255,0.06), 0 6px 28px rgba(0,0,0,0.6);
+  background: linear-gradient(90deg, rgba(40,140,255,0.06), rgba(167,139,250,0.03));
+}
+
+/* form card */
+.rich-footer__card-wrap { margin-top: 24px; display: flex; justify-content: center; }
+.rich-footer__card {
+  width: 100%;
+  max-width: 920px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.22));
+  border-radius: 14px;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 20px 70px rgba(2,8,23,0.6);
+  backdrop-filter: blur(6px);
+}
+
+/* inputs */
+.rich-footer .input {
+  width: 100%;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.04);
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: #eaf5ff;
+  outline: none;
+  transition: box-shadow .18s ease, transform .12s ease;
+}
+.rich-footer .input:focus {
+  box-shadow: 0 10px 26px rgba(67,131,255,0.06);
+  transform: translateY(-2px);
+}
+
+/* send button */
+.btn-send {
+  background: linear-gradient(90deg,#6366f1,#8b5cf6);
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  box-shadow: 0 18px 50px rgba(99,102,241,0.14);
+  cursor: pointer;
+}
+
+/* underline glow */
+.rich-footer__underline {
+  width: 46%;
+  height: 3px;
+  margin: 18px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(47,225,194,0.0), rgba(47,225,194,0.16), rgba(139,106,247,0.06));
+  opacity: 0;
+  transform: scaleX(0.8);
+  transition: opacity .6s ease, transform .6s cubic-bezier(.2,.9,.24,1);
+  box-shadow: 0 12px 40px rgba(47,225,194,0.04);
+}
+.rich-footer__underline.active { opacity: 1; transform: scaleX(1); }
+
+/* copyright */
+.rich-footer__copyright {
+  text-align: center;
+  margin-top: 12px;
+  color: #86a3b8;
+  font-size: 14px;
+}
+
+/* mirrored mini CTA below */
+.rich-footer__mirror {
+  margin-top: 16px;
+  padding: 22px 0 36px;
+  background: linear-gradient(180deg, rgba(10,10,12,0.15), transparent 30%);
+  border-top: 1px solid rgba(255,255,255,0.02);
+}
+.rich-footer__mirror-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.rich-footer__mirror-title {
+  color: #f3fbff;
+  font-weight: 800;
+  font-size: 1.25rem;
+}
+.rich-footer__mirror-actions { display:flex; gap:12px; align-items:center; }
+.btn-primary {
+  background: linear-gradient(90deg,#06b6d4,#7c3aed);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 18px 60px rgba(124,58,237,0.12);
+}
+.btn-ghost {
+  background: rgba(255,255,255,0.02);
+  color: #cfe8ff;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+
+/* Make footer flush: reduce vertical padding and remove extra margins */
+.rich-footer {
+  margin: 0;                /* remove any external margins */
+  padding-top: 28px;        /* keep some top spacing */
+  padding-bottom: 8px !important; /* tiny bottom padding so it doesn't touch bottom */
+  overflow: visible;
+}
+
+/* Mirror block below footer: remove extra top/bottom spacing */
+.rich-footer__mirror {
+  margin-top: 8px;          /* small gap only if you want; set 0 to remove entirely */
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+/* Inner area shouldn't add extra bottom space */
+.rich-footer__inner {
+  padding-bottom: 6px !important;
+  margin-bottom: 0 !important;
+}
+
+/* Make the canvas absolutely fill the footer area but not push layout */
+.rich-footer__canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;               /* ensure canvas doesn't expand footer by accidental height */
+  width: 36%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* If your last content section uses a large bottom margin, clamp it */
+.section--last, .content-end, section:last-of-type {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* fallback: if some element above the footer has an unexpected large min-height */
+.rich-footer,
+.rich-footer__inner,
+.rich-footer__mirror {
+  min-height: 0 !important;
+}
+
+/* 4) minimal styles for some footer elements (tweak to match your theme) */
+.rich-footer {
+  position: relative;
+  padding: 48px 0 72px;
+  color: #cbd5e1;
+  overflow: hidden;
+}
+
+.rich-footer__canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 48%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ensure the content sits above the canvas */
+.rich-footer__inner {
+  position: relative;
+  z-index: 5;
+  padding-top: 12px;
+  padding-bottom: 28px;
+}
+
+/* simple input styles (you have your own; this is fallback) */
+.input {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+  padding: 12px 14px;
+  border-radius: 8px;
+  color: #e6eef8;
+}
+
+/* send button fallback */
+.btn-send {
+  background: linear-gradient(90deg, #8b5cf6, #ec4899);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+}
+
+/* social buttons fallback */
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.02);
+  margin: 0 6px;
+  color: #cbd5e1;
+  text-decoration: none;
+}
+
+/* small underline pulse */
+.rich-footer__underline {
+  height: 6px;
+  width: 60%;
+  margin: 28px auto;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(99,102,241,0.25), rgba(236,72,153,0.18));
+  opacity: 0.2;
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+.rich-footer__underline.active {
+  opacity: 1;
+  transform: scaleX(1.02);
+}
+

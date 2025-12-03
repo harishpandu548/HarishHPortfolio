@@ -1,0 +1,582 @@
+:root{
+  --bg-1: #000000;
+  --bg-2: #000000;
+  /* keep accents as before */
+  --glass-1: rgba(255,255,255,0.04);
+  --glass-2: rgba(255,255,255,0.02);
+  --accent-a: #2fe1c2;
+  --accent-b: #8b6af7;
+  --soft-shadow: rgba(2,8,23,0.6);
+  --card-border: rgba(255,255,255,0.04);
+  --glass-glow: rgba(139,106,247,0.06);
+  --nav-glow: rgba(47,225,194,0.04);
+  --shine: rgba(255,255,255,0.06);
+}
+
+
+/* =========================
+   Animations & keyframes
+   ========================= */
+@keyframes floatY {
+  0%   { transform: translateY(0) }
+  50%  { transform: translateY(-6px) }
+  100% { transform: translateY(0) }
+}
+
+@keyframes floatIcon {
+  0% { transform: translateY(0) scale(1)}
+  50% { transform: translateY(-6px) scale(1.03)}
+  100% { transform: translateY(0) scale(1)}
+}
+
+/* slow shimmering gradient */
+@keyframes shiftGradient {
+  0%   { background-position: 0% 50% }
+  50%  { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+/* entrance: fade & lift */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(18px) scale(0.995) }
+  60% { opacity: 1; transform: translateY(6px) scale(0.998) }
+  100% { opacity: 1; transform: translateY(0) scale(1) }
+}
+
+/* small gloss slide for shimmer */
+@keyframes gloss {
+  0% { transform: translateX(-150%) skewX(-12deg); opacity: 0 }
+  10% { opacity: 0.25 }
+  60% { transform: translateX(150%) skewX(-12deg); opacity: 0.18 }
+  100% { transform: translateX(300%) skewX(-12deg); opacity: 0 }
+}
+
+/* reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  :root { --reduce-motion: 1; }
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+/* =========================
+   SECTION / GRID
+   ========================= */
+
+/* SECTION - reduced top spacing */
+/* SECTION - tighter vertical spacing so heading & slider sit higher */
+.cert-section {
+  padding: 12px 20px 48px;
+  margin-top: 0;
+  margin-bottom: 0;
+  background-color: #000000;
+  background-image:
+    radial-gradient(800px 220px at 10% 18%, rgba(139,106,247,0.02), transparent 6%),
+    radial-gradient(700px 200px at 92% 28%, rgba(47,225,194,0.015), transparent 6%);
+  background-blend-mode: screen;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: visible;
+}
+
+/* top vignette smaller so it doesn't push section down */
+.cert-section {
+  padding: 12px 20px 48px;
+  margin-top: 0;
+  margin-bottom: 0;
+  background-color: #000000;
+  background-image:
+    radial-gradient(800px 220px at 10% 18%, rgba(139,106,247,0.02), transparent 6%),
+    radial-gradient(700px 200px at 92% 28%, rgba(47,225,194,0.015), transparent 6%);
+  background-blend-mode: screen;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: visible;
+}
+
+/* heading gap tightened */
+.cert-header {
+  font-size: 56px;
+  line-height: 0.98;
+  font-weight: 900;
+  margin-bottom: 6px;   /* slightly smaller */
+  color: #f8fbff;
+  text-shadow: 0 10px 40px rgba(2,8,23,0.7);
+  letter-spacing: -0.02em;
+}
+
+/* subtle subtitle */
+.cert-section .subtitle {
+  color: #aeb8c6;
+  max-width: 880px;
+  margin: 6px auto 18px;
+  font-size: 15px;
+  opacity: 0.95;
+}
+
+/* =========================
+   SWIPER wrapper tweaks
+   ========================= */
+
+.cert-swiper .swiper-wrapper {
+  align-items: flex-start;
+  overflow: visible;
+}
+
+/* slide card spacing */
+.cert-swiper .swiper-slide {
+  overflow: visible !important;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  padding: 8px 6px;
+}
+
+/* apply fadeUp entrance with small stagger via nth-child */
+.cert-swiper .swiper-slide .cert-card {
+  opacity: 0;
+  transform-origin: center;
+  animation-name: fadeUp;
+  animation-duration: 620ms;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(.16,.98,.32,1);
+}
+
+/* stagger (first 8 slides) — tweak delays if you have more slides */
+.cert-swiper .swiper-slide:nth-child(1) .cert-card { animation-delay: 0ms; }
+.cert-swiper .swiper-slide:nth-child(2) .cert-card { animation-delay: 80ms; }
+.cert-swiper .swiper-slide:nth-child(3) .cert-card { animation-delay: 140ms; }
+.cert-swiper .swiper-slide:nth-child(4) .cert-card { animation-delay: 200ms; }
+.cert-swiper .swiper-slide:nth-child(5) .cert-card { animation-delay: 260ms; }
+.cert-swiper .swiper-slide:nth-child(6) .cert-card { animation-delay: 320ms; }
+.cert-swiper .swiper-slide:nth-child(7) .cert-card { animation-delay: 380ms; }
+.cert-swiper .swiper-slide:nth-child(8) .cert-card { animation-delay: 440ms; }
+
+/* =========================
+   CARD (glass + depth + animations)
+   ========================= */
+
+.cert-card {
+  width: 100%;
+  max-width: 380px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.25));
+  border-radius: 20px;
+  overflow: visible;
+  position: relative;
+  transition: transform 520ms cubic-bezier(.16,.98,.32,1), box-shadow 520ms, filter 520ms;
+  will-change: transform, box-shadow, filter;
+  cursor: pointer;
+  border: 1px solid var(--card-border);
+  transform-style: preserve-3d;
+  padding-bottom: 10px;
+
+  /* micro backplate with shifting gradient for life */
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,0.012), rgba(0,0,0,0.22)),
+    linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  background-blend-mode: overlay;
+}
+
+/* soft outer glow that appears on hover */
+.cert-card::before{
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 22px;
+  background: linear-gradient(90deg, rgba(47,225,194,0.03), rgba(139,106,247,0.02));
+  z-index: -1;
+  filter: blur(18px);
+  opacity: 0;
+  transition: opacity 360ms ease;
+  pointer-events: none;
+}
+
+/* subtle animated sheen overlay (slow) */
+.cert-card::after{
+  content: "";
+  position: absolute;
+  left: -40%;
+  top: 0;
+  width: 180%;
+  height: 100%;
+  pointer-events: none;
+  transform: skewX(-10deg);
+  background: linear-gradient(90deg, rgba(255,255,255,0.00) 0%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.00) 60%);
+  opacity: 0.0;
+  transition: opacity 420ms ease;
+  animation: shiftGradient 12s linear infinite;
+  background-size: 200% 200%;
+  mix-blend-mode: overlay;
+}
+
+/* image wrapper - fixed height prevents layout jumps */
+.cert-card .cert-img-wrapper {
+  width: 100%;
+  height: 300px;
+  position: relative;
+  overflow: visible;
+  border-radius: 14px;
+  transform-style: preserve-3d;
+  background: radial-gradient(600px 160px at 10% 20%, rgba(0,0,0,0.06), transparent 10%);
+}
+
+/* image itself - will pop out on hover & respond slightly to pointer (if you add tilt JS) */
+.cert-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  transition: transform 520ms cubic-bezier(.16,.98,.32,1), box-shadow 520ms, filter 520ms;
+  transform-origin: center top;
+  will-change: transform;
+  position: relative;
+  z-index: 6;
+  transform: translateZ(0);
+  box-shadow: 0 18px 60px rgba(2,8,23,0.55);
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+/* animated tiny bubble on top-right corner for life (pseudo-element) */
+.cert-img-wrapper::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, #bfefff, #3fbfdc 60%, rgba(63,191,220,0.16));
+  position: absolute;
+  right: 18px;
+  top: 12px;
+  box-shadow: 0 6px 18px rgba(63,191,220,0.15);
+  animation: floatIcon 4s ease-in-out infinite;
+  opacity: 0.95;
+}
+
+/* bottom curved panel (envelope) - richer depth and slight lift */
+/* bottom curved panel (envelope) - pulled up but less extreme */
+.cert-bottom {
+  position: relative;
+  margin-top: -72px; /* reduced pull so layout is shorter */
+  padding: 64px 22px 24px; /* tuned with the smaller pull */
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.28));
+  border-radius: 48px 48px 18px 18px / 80% 80% 18px 18px;
+  box-shadow: 0 22px 90px rgba(2,8,23,0.55), inset 0 1px 0 rgba(255,255,255,0.02);
+  color: white;
+  text-align: center;
+  transition: transform 360ms ease, box-shadow 360ms ease, filter 360ms;
+  z-index: 4;
+  border: 1px solid rgba(255,255,255,0.03);
+  backdrop-filter: blur(6px) saturate(1.06);
+}
+
+/* Title & meta */
+.cert-title {
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0 0 8px;
+  line-height: 1.02;
+  color: #fbfbff;
+  letter-spacing: -0.01em;
+  text-shadow: 0 6px 14px rgba(2,8,23,0.45);
+}
+
+.cert-info {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  font-size: 14px;
+  opacity: 0.95;
+  margin-bottom: 12px;
+  color: #c2ccd8;
+}
+
+/* CTA - glassy button with gradient ring */
+.cert-btn {
+  display: inline-block;
+  background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  padding: 10px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.05);
+  font-weight: 800;
+  color: #eef6fb;
+  letter-spacing: 0.02em;
+  transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease;
+  box-shadow: 0 8px 30px rgba(2,8,23,0.36);
+  position: relative;
+  overflow: visible;
+}
+
+/* small shine on hover (pseudo) */
+.cert-btn::after {
+  content: "";
+  position: absolute;
+  left: -30%;
+  top: -20%;
+  width: 60%;
+  height: 140%;
+  transform: rotate(-25deg);
+  background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+  opacity: 0;
+  transition: opacity 320ms ease, transform 320ms ease;
+  pointer-events: none;
+}
+.cert-btn:hover::after { opacity: 0.26; transform: translateX(28%); }
+
+/* =========================
+   Hover / Active states
+   ========================= */
+
+.cert-card:hover,
+.cert-card.is-hover {
+  transform: translateY(-20px) rotateX(2deg) scale(1.02);
+  z-index: 90;
+  box-shadow: 0 48px 140px rgba(2,8,23,0.8);
+  filter: saturate(1.04);
+}
+.cert-card:hover::before{ opacity: 1; }
+.cert-card:hover::after{ opacity: 0.14; }
+
+/* image pop */
+.cert-card:hover .cert-img,
+.cert-card.is-hover .cert-img {
+  transform: translateY(-36px) scale(1.04);
+  filter: saturate(1.08) contrast(1.03);
+  box-shadow: 0 36px 90px rgba(2,8,23,0.66);
+}
+
+/* bottom panel slight pull */
+.cert-card:hover .cert-bottom,
+.cert-card.is-hover .cert-bottom {
+  transform: translateY(-8px);
+  box-shadow: 0 28px 120px rgba(2,8,23,0.58);
+}
+
+/* non-active slides subtle desat */
+.cert-swiper .swiper-slide:not(.swiper-slide-active) .cert-card {
+  z-index: 20;
+  transform: translateY(0);
+  filter: saturate(0.94) contrast(0.98) brightness(0.98);
+}
+
+/* =========================
+   Navigation & pagination
+   ========================= */
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #fff;
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  box-shadow: 0 18px 60px rgba(2,8,23,0.6);
+  border: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 36%;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  z-index: 120;
+  position: absolute;
+}
+
+/* make buttons slightly translucent with inner icon */
+.swiper-button-prev svg, .swiper-button-next svg {
+  width: 22px;
+  height: 22px;
+  opacity: 0.98;
+}
+
+/* hover ring */
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  transform: scale(1.08);
+  box-shadow: 0 28px 90px rgba(2,8,23,0.72), 0 0 28px rgba(139,106,247,0.06);
+}
+.swiper-button-prev::after,
+.swiper-button-next::after{
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(47,225,194,0.03), rgba(139,106,247,0.03));
+  z-index: -1;
+  filter: blur(10px);
+  opacity: 0;
+  transition: opacity 260ms;
+}
+.swiper-button-prev:hover::after,
+.swiper-button-next:hover::after{ opacity: 1; }
+
+/* pagination bullets */
+.swiper-pagination-bullet {
+  background: rgba(255,255,255,0.12);
+}
+.swiper-pagination-bullet-active {
+  background: linear-gradient(90deg,var(--accent-a), var(--accent-b));
+  box-shadow: 0 6px 18px rgba(139,106,247,0.14);
+}
+
+/* =========================
+   responsive
+   ========================= */
+
+@media (max-width: 1200px) {
+  .cert-img-wrapper { height: 260px; }
+  .cert-bottom { margin-top: -84px; padding: 62px 20px 20px; }
+  .cert-header { font-size: 44px; }
+  .cert-card { max-width: 340px; border-radius: 18px; }
+  .swiper-button-prev, .swiper-button-next { width: 56px; height: 56px; top: 38%; }
+}
+@media (max-width: 900px) {
+  .cert-img-wrapper { height: 220px; }
+  .cert-bottom { margin-top: -70px; padding: 48px 14px 16px; }
+  .cert-header { font-size: 40px; }
+  .cert-card { max-width: 320px; }
+  .swiper-button-prev, .swiper-button-next { width: 52px; height: 52px; top: 34%; }
+}
+@media (max-width: 480px) {
+  .cert-img-wrapper { height: 180px; }
+  .cert-bottom { margin-top: -56px; padding: 28px 12px 16px; }
+  .cert-card { max-width: 92%; }
+}
+
+/* -------------------------
+   Certificate theme palette
+   ------------------------- */
+
+/* default theme vars (safe fallback) */
+.cert-card {
+  --t-a: #2fe1c2;
+  --t-b: #8b6af7;
+  --t-c: rgba(47,225,194,0.06);
+}
+
+/* theme palettes (feel free to tune) */
+.cert-card[data-theme="azure"]  { --t-a: #06b6d4; --t-b: #60a5fa; --t-c: rgba(6,182,212,0.06); }
+.cert-card[data-theme="amber"]  { --t-a: #ff8a00; --t-b: #ff5e7a; --t-c: rgba(255,138,0,0.06); }
+.cert-card[data-theme="emerald"]{ --t-a: #10b981; --t-b: #06b6d4; --t-c: rgba(16,185,129,0.06); }
+.cert-card[data-theme="indigo"] { --t-a: #6366f1; --t-b: #8b5cf6; --t-c: rgba(99,102,241,0.06); }
+.cert-card[data-theme="rose"]   { --t-a: #ff6b8a; --t-b: #ff9bd0; --t-c: rgba(255,107,138,0.05); }
+.cert-card[data-theme="yellow"] { --t-a: #facc15; --t-b: #ffb020; --t-c: rgba(250,204,21,0.05); }
+.cert-card[data-theme="cyan"]   { --t-a: #22c1c3; --t-b: #3dd5ff; --t-c: rgba(34,193,195,0.05); }
+.cert-card[data-theme="violet"] { --t-a: #a78bfa; --t-b: #7c3aed; --t-c: rgba(167,139,250,0.05); }
+
+/* Title gradient text */
+.cert-title {
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0 0 8px;
+  line-height: 1.02;
+  color: #fff; /* fallback */
+  letter-spacing: -0.01em;
+}
+.cert-title-gradient {
+  background-image: linear-gradient(90deg, var(--t-a), var(--t-b));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  padding: 0 6px;
+  text-shadow: 0 8px 18px rgba(0,0,0,0.6);
+}
+
+/* top-right bubble will take theme color */
+.cert-img-wrapper::after {
+  /* keep existing bubble but now theme-aware */
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, #fff7, var(--t-a) 60%, rgba(0,0,0,0.12));
+  position: absolute;
+  right: 18px;
+  top: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35), 0 0 12px var(--t-c);
+  animation: floatIcon 4s ease-in-out infinite;
+  z-index: 8;
+}
+
+/* small colored accent overlay on top-left of image area */
+.cert-top-accent {
+  position: absolute;
+  left: -4px;
+  top: -6px;
+  width: 3px;
+  height: 34px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, var(--t-a), var(--t-b));
+  box-shadow: 0 8px 20px rgba(0,0,0,0.42), 0 0 14px var(--t-c);
+  transform: translateZ(0);
+  z-index: 7;
+  opacity: 0.98;
+}
+
+/* apply a subtle tinted ring behind the entire cert-bottom panel using theme */
+.cert-bottom {
+  /* existing styles remain; add accent ring using pseudo-element */
+  position: relative;
+}
+.cert-bottom::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.25));
+  mix-blend-mode: overlay;
+  box-shadow: 0 8px 40px var(--t-c);
+  z-index: -1;
+}
+
+/* Button accent uses theme, subtle glow on hover */
+.cert-btn {
+  position: relative;
+  overflow: visible;
+  transition: transform 220ms ease, box-shadow 220ms ease, background 220ms;
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.cert-btn::before {
+  /* thin gradient ring under the button (theme) */
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, var(--t-a), var(--t-b));
+  filter: blur(12px);
+  opacity: 0.07;
+  z-index: -1;
+}
+.cert-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 26px 60px color-mix(in srgb, var(--t-b) 20%, rgba(2,8,23,0.7));
+}
+
+/* when card hovered make theme glow stronger */
+.cert-card:hover::before {
+  opacity: 1;
+  filter: blur(22px);
+}
+
+/* fine-tune text color inside bottom for contrast */
+.cert-bottom,
+.cert-info,
+.cert-btn { color: #eef6fb; }
+
+/* small responsive tweaks (if needed) */
+@media (max-width: 900px) {
+  .cert-title { font-size: 18px; }
+  .cert-title-gradient { font-size: 18px; }
+}
+
+
+/* =========================
+   Optional micro JS hooks (if you add pointer tilt)
+   - .is-hover class can be toggled by JS on pointer enter/leave
+   - You can also add data-theme attributes for colored bottoms
+   ========================= */
+
+/* Example color theme utilities you can set on .cert-card (optional) */
+.cert-card[data-theme="azure"] .cert-bottom { background: linear-gradient(180deg,#07a6bf22,#063e4a40); }
+.cert-card[data-theme="amber"] .cert-bottom { background: linear-gradient(180deg,#c76b09 10%, #7a430a55 100%); }
+.cert-card[data-theme="indigo"] .cert-bottom { background: linear-gradient(180deg,#2b6df4 10%, #13264a55 100%); }

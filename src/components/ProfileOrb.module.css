@@ -1,0 +1,184 @@
+/* ProfileOrb.module.css */
+
+/* layout wrapper */
+.wrapper {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  user-select: none;
+}
+
+/* avatar container with double ring + glow */
+.avatarWrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  overflow: visible; /* allow outer rings */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--avatar-size, 340px);
+  height: var(--avatar-size, 340px);
+  pointer-events: none;
+}
+
+/* inner avatar image */
+.avatarImg {
+width: var(--avatar-size, 340px);
+height: var(--avatar-size, 340px);
+
+  object-fit: cover;
+}
+
+/* double ring effect */
+.avatarWrap::before,
+.avatarWrap::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.avatarWrap::before {
+  width: calc(var(--avatar-size, 340px) + 14px);
+  height: calc(var(--avatar-size, 340px) + 14px);
+  box-shadow:
+    0 0 0 2px rgba(16, 185, 129, 0.06),
+    0 0 36px rgba(34, 211, 238, 0.06),
+    0 0 90px rgba(99, 102, 241, 0.04);
+  mix-blend-mode: screen;
+  /* backdrop-filter: blur(6px); */
+}
+
+.avatarWrap::after {
+  width: calc(var(--avatar-size, 340px) + 70px);
+  height: calc(var(--avatar-size, 340px) + 70px);
+  border: 2px solid rgba(255,255,255,0.03);
+  box-shadow: 0 0 0 8px rgba(3,7,12,0.7) inset, 0 16px 40px rgba(0,0,0,0.6);
+}
+
+/* ripple */
+.ripple {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 36%;
+  height: 36%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 40px rgba(126, 252, 255, 0.06), 0 0 90px rgba(99, 102, 241, 0.04);
+  opacity: 0.9;
+  animation: ringPulse 2.8s ease-out infinite;
+  mix-blend-mode: screen;
+}
+
+/* orbit ring */
+.orbitRing {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow:
+    0 0 0 6px rgba(0,0,0,0.55) inset,
+    0 8px 40px rgba(0,0,0,0.6);
+  pointer-events: none;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.006), transparent 35%);
+}
+
+/* group rotation */
+.orbitGroup {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+  pointer-events: none;
+  animation-name: spin-slow;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* orb item: position only — NO transform animation here */
+.orbItem {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
+  will-change: transform, opacity;
+  opacity: 1;
+  pointer-events: auto;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+/* inner token — animation moved here (scale + opacity only) */
+.orbInner {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.35));
+  backdrop-filter: blur(6px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.7), inset 0 -6px 12px rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+  transition: box-shadow 220ms ease, opacity 200ms ease;
+  animation: tokenPulse 3.6s ease-in-out infinite;
+}
+
+/* tokenPulse animates scale & opacity only — DOES NOT touch translate/rotation */
+@keyframes tokenPulse {
+  0%   { opacity: 0;   transform: scale(0.92); }
+  12%  { opacity: 0.85; transform: scale(1); }
+  55%  { opacity: 1;   transform: scale(1.02); }
+  78%  { opacity: 0.75; transform: scale(0.98); }
+  100% { opacity: 0;   transform: scale(0.92); }
+}
+
+.orbInner svg {
+  display: block;
+  width: 90% !important;   /* BIGGER ICONS */
+  height: 90% !important;
+}
+
+
+/* hover effect (pop on hover) */
+.orbItem:hover .orbInner {
+  transform: scale(1.08);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.75), inset 0 -8px 18px rgba(255,255,255,0.02);
+}
+
+/* ripple keyframes */
+@keyframes ringPulse {
+  0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.9; }
+  50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.45; }
+  100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0; }
+}
+
+/* responsive */
+@media (max-width: 1280px) {
+  .orbItem { width: 44px; height: 44px; margin: -22px 0 0 -22px; }
+  .orbInner svg { width: 50%; height: 50%; }
+}
+@media (max-width: 1024px) {
+  .orbItem { width: 40px; height: 40px; margin: -20px 0 0 -20px; }
+  .orbInner svg { width: 56%; height: 56%; }
+}
+@media (max-width: 640px) {
+  .avatarWrap { width: calc(var(--avatar-size, 240px)); height: calc(var(--avatar-size, 240px)); }
+  .orbItem { width: 36px; height: 36px; margin: -18px 0 0 -18px; }
+  .ripple { width: 60%; height: 60%; }
+}
