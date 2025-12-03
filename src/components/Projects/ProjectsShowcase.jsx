@@ -114,7 +114,7 @@ export default function ProjectsShowcase() {
         "Access token expiry & silent refresh via secure cookies",
       ],
       live: "https://project2-tau-olive.vercel.app/",
-      github: "https://github.com/harishpandu548/AuthProfile",
+      github: "https://github.com/harishpandu548/project2",
       backendLive: "",
       backendGithub: "",
     },
