@@ -6,64 +6,59 @@ import styles from "./SkillsPlayground.module.css";
 
 /* base labels (we will cycle through these to create more cubes) */
 const BASE_LABELS = [
+  // Core Web
   "HTML",
   "CSS",
   "JavaScript",
   "TypeScript",
+
+  // Frontend
   "React",
   "Next.js",
-  // "Bootstrap",
   "Tailwind CSS",
+  "Framer Motion",
+
+  // Backend
   "Node.js",
   "Express.js",
+  "REST APIs",
+  // "API Security",
+
+  // Auth & Security
+  // "Authentication Systems",
+  // "Authorization (RBAC)",
+  "NextAuth.js",
+  "JWT",
+
+  // Databases
   "MongoDB",
   "Mongoose",
-  "REST APIs",
-  // "JWT",
-  // "Cloudinary",
-  "Axios",
-  // "CORS",
-  // "React Hook Form",
-  // "File Upload",
-  // "Environment Variables",
-  // "Responsive Design",
-  "MERN Stack",
-  "NextAuth.js",
-  // "React Router",
-  // "Context API",
-  // "Multer",
-  // "Dotenv",
-  // "React Hot Toast",
-  // "Lottie",
-  // "Framer Motion",
-  "Python",
-  "Java",
-  // "MVC Architecture",
-  // "RESTful Routing",
-  // "Middleware",
-  // "Token-based Auth",
-  // "Error Handling",
-  "Database Modeling",
-  // "Protected Routes",
-  // "Session Management",
+  "PostgreSQL",
+  "Prisma",
+  // "Database Modeling",
+
+  // AI / SaaS
+  // "AI Integration",
+  // "LLM APIs",
+  // "PDF Processing",
+  // "Credit System",
+  "SaaS Architecture",
+
+  // Payments
+  "Razorpay",
+  "Webhooks",
+
+  // Tools
   "Git",
   "GitHub",
   "Postman",
-  // "Thunder Client",
-  // "Railway",
-  // "Render",
-  // "Vercel",
-  // "Chrome DevTools",
-  // "Nodemon",
-  // "CI/CD Basics",
-  // "Proxy Setup",
-  // "MS Office",
-  // "Adobe Photoshop",
-  // "Canva",
-  // "Video Editing",
-  // "Deep Learning",
-  // "Neural Networks"
+  "Axios",
+
+  // Languages
+  "Python",
+  "Java",
 ];
+
 
 /* color map (distinct-ish colors) */
 const LABEL_COLOR_MAP = {
@@ -123,7 +118,26 @@ const LABEL_COLOR_MAP = {
   "Canva": "#ff6b6b",
   "Video Editing": "#fb7185",
   "Deep Learning": "#c084fc",
-  "Neural Networks": "#7c3aed"
+  "Neural Networks": "#7c3aed",
+  "PostgreSQL": "#336791",
+"Prisma": "#0c344b",
+
+"Authentication Systems": "#22c55e",
+"Authorization (RBAC)": "#16a34a",
+
+"AI Integration": "#c084fc",
+"LLM APIs": "#a855f7",
+"PDF Processing": "#fb923c",
+"Credit System": "#f59e0b",
+"SaaS Architecture": "#38bdf8",
+
+"Razorpay": "#0ea5e9",
+"Webhooks": "#14b8a6",
+
+"API Security": "#ef4444",
+"JWT": "#f97316",
+"Framer Motion": "#8b5cf6",
+
 };
 
 export default function SkillsPlayground({ total = BASE_LABELS.length }) {

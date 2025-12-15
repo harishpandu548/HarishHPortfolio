@@ -90,6 +90,41 @@ export default function ProjectsShowcase() {
      ======================= */
   const slides = [
     {
+  id: 0,
+  title: "AI SaaS Platform",
+  subtitle:
+    "Production-grade AI Software-as-a-Service platform with chat, content generation, document summarization, and credit-based access control.",
+  img: "/projects/aisaas-1.jpg", 
+  bg: "bg-gradient-to-br from-fuchsia-300/10 via-purple-300/10 to-indigo-900/20",
+  tech: [
+    "Next.js (App Router)",
+    "TypeScript",
+    "Prisma",
+    "PostgreSQL (Neon)",
+    "NextAuth",
+    "Razorpay",
+    "Gemini AI",
+    "Tailwind CSS",
+    "Framer Motion",
+  ],
+  features: [
+    "AI-powered chat assistant with persistent conversation history",
+    "Multiple AI tools including blog writer, email generator, content rewriter, and idea generator",
+    "PDF upload and AI-based document summarization",
+    "Secure authentication using NextAuth with protected routes",
+    "Credit-based usage system with free and paid plans",
+    "Integrated Razorpay payments with webhook-based credit updates",
+    "Admin-level role handling and user management",
+    "Server-side validation, API protection, and production-ready architecture",
+    "Responsive SaaS dashboard with glassmorphism UI",
+  ],
+  live: "https://ai-saas-application-gamma.vercel.app/",
+  github: "https://github.com/harishpandu548/AI-SaaS-application",
+  backendLive: "",
+  backendGithub: "",
+},
+
+    {
       id: 1,
       title: "AuthProfile",
       subtitle:

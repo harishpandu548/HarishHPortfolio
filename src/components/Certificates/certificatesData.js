@@ -42,8 +42,18 @@ export const certificates = [
     issuer: "HP LIFE",
     date: "Aug 2024",
     img: "/certificates/certificate-1.png",
-    url: "/certificates/certificate-2.png",
+    url: "/certificates/certificate-1.png",
     theme: "azure"
   },
+  {
+  id: 6,
+  title: "Internship Common Aptitude Test (LCAT)",
+  issuer: "LabMentix",
+  date: "Dec 2025",
+  img: "/certificates/lcat-certificate.png", // add image here
+  url: "/certificates/lcat-certificate.png",
+  theme: "indigo",
+}
+
   // ...etc
 ];
